@@ -14,6 +14,7 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
    </script>
+   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
    <script>
        $.ajaxSetup({
@@ -44,6 +45,26 @@
                            $('#addProductForm')[0].reset();
                            $('#addErrMsgContainer').empty();
                            $('.table').load(location.href + ' .table');
+
+                           Command: toastr["success"]("Product Added", "Success")
+
+                           toastr.options = {
+                               "closeButton": true,
+                               "debug": false,
+                               "newestOnTop": false,
+                               "progressBar": false,
+                               "positionClass": "toast-top-right",
+                               "preventDuplicates": false,
+                               "onclick": null,
+                               "showDuration": "300",
+                               "hideDuration": "1000",
+                               "timeOut": "5000",
+                               "extendedTimeOut": "1000",
+                               "showEasing": "swing",
+                               "hideEasing": "linear",
+                               "showMethod": "fadeIn",
+                               "hideMethod": "fadeOut"
+                           }
                        }
                    },
                    error: function(err) {
@@ -103,6 +124,27 @@
                            $('#updateErrMsgContainer').empty();
                            $('.table').load(location.href + ' .table');
 
+
+                           Command: toastr["success"]("Product Updated", "Success")
+
+                           toastr.options = {
+                               "closeButton": true,
+                               "debug": false,
+                               "newestOnTop": false,
+                               "progressBar": false,
+                               "positionClass": "toast-top-right",
+                               "preventDuplicates": false,
+                               "onclick": null,
+                               "showDuration": "300",
+                               "hideDuration": "1000",
+                               "timeOut": "5000",
+                               "extendedTimeOut": "1000",
+                               "showEasing": "swing",
+                               "hideEasing": "linear",
+                               "showMethod": "fadeIn",
+                               "hideMethod": "fadeOut"
+                           }
+
                        }
                    },
                    error: function(err) {
@@ -127,5 +169,70 @@
                    }
                });
            });
+
+
+
+           //delete product
+           $(document).on('click', '.delete_product', function(e) {
+               e.preventDefault();
+               let product_id = $(this).data('id');
+               //alert(product_id);
+               if (confirm('Are You sure to delete product ??')) {
+                   $.ajax({
+                       url: "{{ route('delete.product') }}",
+                       method: 'post',
+                       data: {
+                           product_id: product_id
+                       },
+                       success: function(res) {
+                           if (res.status == 'success') {
+                               $('.table').load(location.href + ' .table');
+
+                               Command: toastr["success"]("Product Deleted", "Success")
+
+                               toastr.options = {
+                                   "closeButton": true,
+                                   "debug": false,
+                                   "newestOnTop": false,
+                                   "progressBar": false,
+                                   "positionClass": "toast-top-right",
+                                   "preventDuplicates": false,
+                                   "onclick": null,
+                                   "showDuration": "300",
+                                   "hideDuration": "1000",
+                                   "timeOut": "5000",
+                                   "extendedTimeOut": "1000",
+                                   "showEasing": "swing",
+                                   "hideEasing": "linear",
+                                   "showMethod": "fadeIn",
+                                   "hideMethod": "fadeOut"
+                               }
+                           }
+                       }
+                   });
+               }
+           });
+
+
+           //pagination
+
+
+           $(document).on('click', '.pagination a', function(e) {
+               e.preventDefault();
+               let page = $(this).attr('href').split('page=')[1]
+               product(page);
+
+           });
+           function product(page) {
+               $.ajax({
+                   url: "/pagination/pagination-data?page=" + page,
+                   success: function(res) {
+                       $('.table-data').html(res);
+                   }
+               })
+           }
+
+
+
        });
    </script>

@@ -12,8 +12,13 @@ class ProductController extends Controller
     public function products()
     {
         $products = Product::latest()->paginate(5);
+        // dd($products);
+        foreach ($products as $product) {
+            dd($product->id);
+        }
         return view('products', ['products' => $products]);
     }
+
     public function addProduct(ProductRequest $request)
     {
 
@@ -40,5 +45,18 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success'
         ]);
+    }
+    public function deleteProduct(Request $request)
+    {
+        Product::find($request->product_id)->delete();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    public function pagination()
+    {
+        $products = Product::latest()->paginate(5);
+        return view('pagination_products', ['products' => $products])->render();
     }
 }

@@ -11,7 +11,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet"
         href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <title>Ajax Crud</title>
 </head>
 
@@ -47,7 +47,10 @@
                                             data-name="{{ $product->name }}" data-price="{{ $product->price }}">
                                             <i class="las la-edit"></i>
                                         </a>
-                                        <a href=""class="btn btn-danger "><i class="las la-times"></i></i></a>
+                                        <a href="" class="btn btn-danger delete_product"
+                                            data-id="{{ $product->id }}">
+                                            <i class="las la-times">
+                                            </i></i></a>
 
                                     </td>
                                 </tr>
@@ -62,6 +65,7 @@
     @include('add_product_modal')
     @include('update_product_modal')
     @include('product_js')
+    {!! Toastr::message() !!}
 
 </body>
 
