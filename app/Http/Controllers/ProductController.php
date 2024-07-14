@@ -14,7 +14,7 @@ class ProductController extends Controller
         $products = Product::latest()->paginate(5);
         // dd($products);
         foreach ($products as $product) {
-            dd($product->id);
+            //  dd($product->id);
         }
         return view('products', ['products' => $products]);
     }
